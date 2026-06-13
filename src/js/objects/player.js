@@ -1,10 +1,13 @@
 import { Actor, Keys, Vector } from "excalibur"
 import { Resources } from "../resources.js"
 import { Arrow } from "./arrow.js"
+import { Slash } from "./slash.js"
 import { Platform } from "./platform.js"
+
 
 export class Player extends Actor {
     arrowReady = true
+    slashReady = true
     onPostUpdate(engine, delta) {
         let xspeed = 0
                 if (engine.input.keyboard.wasPressed(Keys.W)) {
@@ -23,30 +26,50 @@ export class Player extends Actor {
                 }
                 if (engine.input.keyboard.wasPressed(Keys.Space) && this.arrowReady) {
                     this.shoot()
+                    engine.clock.schedule(() => {
+                        this.arrowReady = true
+                    }, 1000)
+                }
+
+                if (engine.input.keyboard.wasPressed(Keys.Enter) && this.slashReady) {
+                    this.slash()
                 }
                 this.vel = new Vector(xspeed, this.vel.y)
     }
 
+   
     shoot() {
         const arrow = new Arrow(this.pos.x, this.pos.y)
         this.scene.add(arrow)
         this.arrowReady = false
-        setTimeout(() => {
-                this.arrowReady = true
-            }, 1000)
+        this.scene.engine.clock.schedule(() => {
+                        this.arrowReady = true
+        }, 1000)
+    }
+
+    slash() {
+        const slash = new Slash(this.pos.x, this.pos.y)
+        this.scene.add(slash)
+        this.slashReady = false
+        
+        this.scene.engine.clock.schedule(() => {
+            slash.kill()
+        }, 200)
+
+        this.scene.engine.clock.schedule(() => {
+            this.slashReady = true
+        }, 500)
     }
 
     onCollisionStart(event, other) {
         if(other.owner instanceof Platform) {
             this.grounded = true
-            console.log("grounded")
         }
     }
 
     onCollisionEnd(event, other) {
         if(other.owner instanceof Platform) {
             this.grounded = false
-            console.log("left platform")
         }
     }
 }

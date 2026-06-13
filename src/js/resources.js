@@ -7,6 +7,8 @@ const Resources = {
     Background: new ImageSource('images/Background.png'),
     IceGolem: new ImageSource('images/idle golem.png'),
     Platform: new ImageSource('images/platform.png'),
+    
+    Slash: new ImageSource('images/Slash.png')
 }
 
 

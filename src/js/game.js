@@ -7,7 +7,8 @@ import { IceGolem } from './objects/iceGolem.js'
 import { Platform } from './objects/platform.js'
 
 export class Game extends Engine {
-
+    score = 0;
+    
     constructor() {
         super({ 
             width: 1280,
