@@ -1,19 +1,18 @@
-import { Actor, CollisionStartEvent, CollisionType, Engine, Keys, Vector } from "excalibur"
+import { Actor, CollisionStartEvent, CollisionType, Engine, Keys, Sprite, Vector } from "excalibur"
 import { Resources } from "../resources.js"
-import { Platform } from "./platform.js"
+import { Floor } from "./floor.js"
 import { Yana } from "./yana.js"
 
 export class IceGolem extends Actor {
-    hp = 3;
-    grounded = false
-    jumpReady = false
+    hp = 3
     constructor() {
         super({ width: Resources.IceGolem.width, height: Resources.IceGolem.height })
+        
     }
 
     onInitialize(engine) {
         this.body.collisionType = CollisionType.Active
-        let xVel = -200
+        let xVel = -200 * engine.difficulty
         let yVel = 0
         let xPosition = 1280
         let yPosition = 460
@@ -21,36 +20,19 @@ export class IceGolem extends Actor {
         this.pos = new Vector(xPosition, yPosition)
         this.vel = new Vector(xVel, yVel)
         this.scale = new Vector(1.3, 1.3)
+        this.graphics.flipHorizontal = true
     }
 
-    onPreUpdate(engine, delta) {
+    onPreUpdate() {
         if (this.hp <= 0) {
             this.kill()
-        }
-
-        if (this.grounded && this.jumpReady) {
-            this.body.applyLinearImpulse(new Vector(0, -300 * delta))
         }
     }
 
     onCollisionStart(event, other) {
-            if(other.owner instanceof Platform) {
-                this.grounded = true
-                setTimeout(() => {
-                this.jumpReady = true
-            }, Math.random() * 2000 + 500)
-            }
-
-            if (other.owner instanceof Yana) {
-                other.owner.health -= 1
-                this.kill()
-            }
+        if (other.owner instanceof Yana) {
+            other.owner.health -= 1
+            this.kill()
         }
-    
-        onCollisionEnd(event, other) {
-            if(other.owner instanceof Platform) {
-                this.grounded = false
-                this.jumpReady = false
-            }
-        }
+    }
 }

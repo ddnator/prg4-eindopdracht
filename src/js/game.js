@@ -1,48 +1,47 @@
 import '../css/style.css'
-import { Actor, Engine, Vector, SolverStrategy, DisplayMode } from "excalibur"
+import { Actor, Engine, Vector, FadeInOut, Color, SolverStrategy, DisplayMode } from "excalibur"
 import { Resources, ResourceLoader } from './resources.js'
 import { Yana } from './objects/yana.js'
 import { Background } from './objects/background.js'
 import { IceGolem } from './objects/iceGolem.js'
-import { Platform } from './objects/platform.js'
+import { Floor } from './objects/floor.js'
+import { Wolf } from './objects/wolf.js'
+import { Crow } from './objects/crow.js'
+import { UI } from './objects/ui.js'
+import { Spike } from './objects/spike.js'
+import { Apple } from './objects/apple.js'
+import { Level1 } from './levels/level1.js'
+import { Tutorial } from './levels/tutorial.js'
 
 export class Game extends Engine {
     score = 0;
-    
+    difficulty = 1;
+    enemyTimer = 0;
+    spikeTimer = 0;
+
     constructor() {
-        super({ 
+        super({
             width: 1280,
             height: 720,
             maxFps: 60,
             displayMode: DisplayMode.FitScreen,
             physics: {
-              solver: SolverStrategy.Arcade,
-              gravity: new Vector(0, 800),
-          }
-         })
+                solver: SolverStrategy.Arcade,
+                gravity: new Vector(0, 800),
+            }
+        })
         this.start(ResourceLoader).then(() => this.startGame())
     }
 
     startGame() {
-        console.log("start de game!")
-        const background = new Background()
-        this.add(background)
-        const platform = new Platform()
-        this.add(platform)
-        const yana = new Yana()
-        yana.events.on("exitviewport", (e) => this.fishLeft(e))
-        this.add(yana)
-        const iceGolem = new IceGolem()
-        this.add(iceGolem)
-        const iceGolem2 = new IceGolem()
-        this.add(iceGolem2)
-        
-        
-    }
+        let transitions = {
+            in: new FadeInOut({ duration: 400, direction: 'in', color: Color.Black }),
+            out: new FadeInOut({ duration: 400, direction: 'out', color: Color.Black })
+        }
 
-    fishLeft(e) {
-        e.target.pos = new Vector(1350, 300)
+        this.add('tutorial', new Tutorial())
+
+        this.goToScene('tutorial')
     }
 }
-
 new Game()

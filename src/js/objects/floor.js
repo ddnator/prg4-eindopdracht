@@ -1,7 +1,7 @@
 import { CollisionType, Actor, Vector } from 'excalibur'
 import { Resources } from '../resources.js'
 
-export class Platform extends Actor {
+export class Floor extends Actor {
 
     constructor(x, y) {
         super({ width: 1300, height: 20}) 

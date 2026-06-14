@@ -1,6 +1,8 @@
 import { Actor, Vector } from "excalibur"
 import { Resources } from "../resources.js"
 import { IceGolem } from "./iceGolem.js"
+import { Wolf } from "./wolf.js"
+import { Crow } from "./crow.js"
 
 
 export class Slash extends Actor {
@@ -21,7 +23,7 @@ export class Slash extends Actor {
     }
 
      hitSomething(event) {
-        if (event.other.owner instanceof IceGolem) {
+        if (event.other.owner instanceof IceGolem  || event.other.owner instanceof Wolf || event.other.owner instanceof Crow) {
             event.other.owner.kill();
         }
     }
