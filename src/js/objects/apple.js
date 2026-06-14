@@ -1,6 +1,9 @@
 import { CollisionType, Actor, Vector } from 'excalibur'
 import { Resources } from '../resources.js'
 import { Yana } from './yana.js'
+import { IceGolem } from './iceGolem.js'
+import { Wolf } from './wolf.js'
+import { Crow } from './crow.js'
 
 export class Apple extends Actor {
     constructor() {
@@ -19,6 +22,9 @@ export class Apple extends Actor {
         if (event.other.owner instanceof Yana) {
             event.other.owner.health += 1
             this.kill();
+        } else if (event.other.owner instanceof Wolf || event.other.owner instanceof IceGolem || event.other.owner instanceof Crow) {
+            this.kill();
+            event.other.owner.kill();
         }
     }
 }

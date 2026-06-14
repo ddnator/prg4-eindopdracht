@@ -12,6 +12,7 @@ import { Spike } from './objects/spike.js'
 import { Apple } from './objects/apple.js'
 import { Level1 } from './levels/level1.js'
 import { Tutorial } from './levels/tutorial.js'
+import { Transition } from './levels/transition.js'
 
 export class Game extends Engine {
     constructor() {
@@ -35,8 +36,19 @@ export class Game extends Engine {
         }
 
         this.add('tutorial', new Tutorial())
-
+        this.add('level1', new Level1())
+        this.add('transition', new Transition())
         this.goToScene('tutorial')
+    }
+
+    restart() {
+        this.goToScene('transition').then(() => {
+            this.removeScene('tutorial')
+            this.removeScene('level1')
+            this.add('tutorial', new Tutorial())
+            this.add('level1', new Level1())
+            this.goToScene('tutorial')
+        })
     }
 }
 new Game()

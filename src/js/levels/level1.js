@@ -32,7 +32,7 @@ export class Level1 extends Scene {
         const floor = new Floor()
         this.add(floor)
         this.yana = new Yana()
-        this.yana.events.on("exitviewport", (e) => this.leftScreen(e))
+        this.yana.events.on("exitviewport", (e) => this.playerLeftScreen(e))
         this.add(this.yana)
     }
 
@@ -55,13 +55,6 @@ export class Level1 extends Scene {
         }
 
         this.score += Math.floor(1 + this.difficulty)
-        if (this.yana.health <= 0) {
-            this.yana.kill()
-            this.engine.removeScene('tutorial')
-            this.engine.addScene('tutorial', new Tutorial())
-            this.engine.goToScene('tutorial')
-    
-        }
     }
 
     spawnEnemy() {
@@ -77,7 +70,7 @@ export class Level1 extends Scene {
 
         enemy.events.on("exitviewport", (e) => enemy.kill())
         this.add(enemy)
-        
+
     }
 
     spawnSpike() {
@@ -92,5 +85,9 @@ export class Level1 extends Scene {
 
     leftScreen(e) {
         e.target.kill()
+    }
+
+    playerLeftScreen() {
+        this.yana.health = 0
     }
 }

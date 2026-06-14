@@ -3,6 +3,7 @@ import { Resources } from "../resources"
 
 export class Background extends Actor {
     offset
+    xVel = 100
     constructor(offset) {
         super()
         this.offset = offset
@@ -14,6 +15,6 @@ export class Background extends Actor {
     }
 
     onPostUpdate(engine) {
-        this.vel = new Vector(-engine.difficulty * 100, 0)
+        this.vel = new Vector(-engine.difficulty * this.xVel, 0)
     }
 }

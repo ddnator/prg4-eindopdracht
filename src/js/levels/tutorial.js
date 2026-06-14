@@ -55,10 +55,9 @@ export class Tutorial extends Scene {
         }, 12000)
 
         this.engine.clock.schedule(() => {
-            this.engine.removeScene('level1')
-            this.engine.addScene('level1', new Level1())
+            spike.kill()
             this.engine.goToScene('level1')
-        }, 4000)
+        }, 16000)
 
         this.engine.score = 0;
         this.engine.difficulty = 1;

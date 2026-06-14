@@ -3,6 +3,7 @@ import { Resources } from "../resources.js"
 import { Arrow } from "./arrow.js"
 import { Slash } from "./slash.js"
 import { Floor } from "./floor.js"
+import { Game } from "../game.js"
 
 export class Yana extends Actor {
     health = 3;
@@ -47,6 +48,11 @@ export class Yana extends Actor {
             this.slash()
         }
         this.vel = new Vector(xspeed, this.vel.y)
+
+        if (this.health <= 0) {
+            this.kill()
+            this.scene.engine.restart()
+        }
     }
 
 
