@@ -38,7 +38,7 @@ export class Game extends Engine {
         this.add('tutorial', new Tutorial())
         this.add('level1', new Level1())
         this.add('transition', new Transition())
-        this.goToScene('tutorial')
+        this.goToScene('level1')
     }
 
     restart() {

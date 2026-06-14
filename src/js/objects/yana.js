@@ -39,9 +39,6 @@ export class Yana extends Actor {
         }
         if (engine.input.keyboard.wasPressed(Keys.Space) && this.arrowReady) {
             this.shoot()
-            engine.clock.schedule(() => {
-                this.arrowReady = true
-            }, 1000)
         }
 
         if (engine.input.keyboard.wasPressed(Keys.Enter) && this.slashReady) {
