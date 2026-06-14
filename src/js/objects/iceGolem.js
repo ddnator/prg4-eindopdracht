@@ -5,6 +5,7 @@ import { Yana } from "./yana.js"
 
 export class IceGolem extends Actor {
     hp = 3
+    xVel
     constructor() {
         super({ width: Resources.IceGolem.width, height: Resources.IceGolem.height })
         
@@ -12,13 +13,13 @@ export class IceGolem extends Actor {
 
     onInitialize(engine) {
         this.body.collisionType = CollisionType.Active
-        let xVel = -200 * engine.difficulty
+        this.xVel = -200 * engine.difficulty
         let yVel = 0
         let xPosition = 1280
         let yPosition = 460
         this.graphics.use(Resources.IceGolem.toSprite())
         this.pos = new Vector(xPosition, yPosition)
-        this.vel = new Vector(xVel, yVel)
+        this.vel = new Vector(this.xVel, yVel)
         this.scale = new Vector(1.3, 1.3)
         this.graphics.flipHorizontal = true
     }

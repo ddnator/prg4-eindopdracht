@@ -14,11 +14,6 @@ import { Level1 } from './levels/level1.js'
 import { Tutorial } from './levels/tutorial.js'
 
 export class Game extends Engine {
-    score = 0;
-    difficulty = 1;
-    enemyTimer = 0;
-    spikeTimer = 0;
-
     constructor() {
         super({
             width: 1280,

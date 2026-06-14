@@ -28,9 +28,4 @@ export class Crow extends Actor {
             this.kill()
         }
     }
-    onPostUpdate(engine) {
-        if (this.vel === 0) {
-            this.kill()
-        }
-    }
 }
